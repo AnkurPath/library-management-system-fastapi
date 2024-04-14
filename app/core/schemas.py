@@ -1,8 +1,12 @@
-from pydantic import BaseModel ,EmailStr
+from pydantic import BaseModel 
 
-class UserCreate(BaseModel):
+class UserCreateRequest(BaseModel):
     first_name :str
     last_name : str
-    email : EmailStr
+    email : str
     password : str
-    is_librarian : int
+    is_librarian : bool
+
+
+# class UserCreateResponse(BaseModel):
+#     ...

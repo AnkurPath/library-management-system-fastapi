@@ -1,10 +1,10 @@
-from fastapi import APIRouter, Depends, status
+from fastapi import APIRouter, Depends, status ,FastAPI
 from sqlalchemy.orm import Session
 from core.schemas import UserCreateRequest
 from core.database import DatabaseDependency
 from core.models import User
 
-user_router = APIRouter(prefix="/user")
+user_router = FastAPI(openapi_prefix="/user")
 
 @user_router.post("/register", status_code=status.HTTP_201_CREATED)
 async def register_user(create_user_request: UserCreateRequest,db: Session = Depends(DatabaseDependency())):

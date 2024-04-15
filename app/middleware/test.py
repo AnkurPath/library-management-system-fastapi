@@ -1,7 +1,7 @@
 from fastapi import Request
 from starlette.middleware.base import BaseHTTPMiddleware
 
-class MyMiddleware(BaseHTTPMiddleware):
+class MyMiddleware2(BaseHTTPMiddleware):
     def __init__(
             self,
             app,

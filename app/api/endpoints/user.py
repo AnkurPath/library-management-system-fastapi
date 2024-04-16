@@ -25,10 +25,6 @@ async def register_user(
     db.add(create_user_model)
     db.commit()
     db.refresh(create_user_model)
-    
-    # access_token = create_access_token(data={"sub": create_user_model.email})
-    # return {"access_token": access_token, "token_type": "Bearer"}
-
 # {
 #   "first_name": "ankur",
 #   "last_name": "pathak",

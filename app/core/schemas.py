@@ -7,6 +7,7 @@ class UserCreateRequest(BaseModel):
     password : str
     is_librarian : bool
 
-
-# class UserCreateResponse(BaseModel):
-#     ...
+class UserLoginRequest(BaseModel):
+    email : str
+    password : str
+    remember_me : bool

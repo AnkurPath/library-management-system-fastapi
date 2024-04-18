@@ -1,17 +1,17 @@
-from fastapi import FastAPI, HTTPException, status, APIRouter, Depends, Query
+from fastapi import HTTPException, status, APIRouter, Depends, Query
 from typing import List
 from sqlalchemy.orm import Session
 from core.schemas import AddBookRequest ,UpdateBookRequest
 from core.database import DatabaseDependency
 from core.models import Book
-
+from core.service import is_current_user_librarian
 
 book_router = APIRouter(prefix="/book")
-
 
 @book_router.post("/add",status_code=status.HTTP_201_CREATED)
 async def add_book(
     add_book_request:AddBookRequest,
+    user: bool = Depends(is_current_user_librarian),
     db: Session = Depends(DatabaseDependency())
     ):
     existing_book = db.query(Book).filter(Book.title == add_book_request.title,Book.author == add_book_request.author).first()
@@ -24,6 +24,7 @@ async def add_book(
         db.commit()
     
 DEFAULT_PAGE_SIZE = 5
+
 @book_router.get("/list",status_code=status.HTTP_200_OK,response_model=List[AddBookRequest])
 async def get_books(
     db: Session = Depends(DatabaseDependency()),
@@ -37,6 +38,7 @@ async def get_books(
 @book_router.put("/update",status_code=status.HTTP_204_NO_CONTENT)
 async def update_book(
     update_book_request:UpdateBookRequest,
+    user: bool = Depends(is_current_user_librarian),
     db: Session = Depends(DatabaseDependency())
     ):
     existing_book = db.query(Book).filter(Book.title == update_book_request.title).first()
@@ -50,6 +52,7 @@ async def update_book(
 @book_router.delete("/delete/{book_title}")
 async def delete_book(
     book_title : str,
+    user: bool = Depends(is_current_user_librarian),
     db: Session = Depends(DatabaseDependency())
     ):
     existing_book = db.query(Book).filter(Book.title == book_title ).first()

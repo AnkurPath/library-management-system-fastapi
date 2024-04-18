@@ -15,6 +15,11 @@ async def register_user(
     create_user_request: UserCreateRequest,
     db: Session = Depends(DatabaseDependency())
     ):
+    # Check if the user already exists
+    existing_user = db.query(User).filter(User.email == create_user_request.email).first()
+    if existing_user:
+        raise HTTPException(status_code=status.HTTP_409_CONFLICT, detail="User already exists")
+
     create_user_model = User(
         first_name=create_user_request.first_name,
         last_name=create_user_request.last_name,

@@ -32,7 +32,7 @@ class BorrowHistory(Base):
     __tablename__ = "borrow_history"
 
     id = Column(Integer, primary_key=True, autoincrement=True)
-    user_email = Column(String(255), ForeignKey("users.email"))
+    user_email = Column(String(255), ForeignKey("users.email"),index=True)
     book_title = Column(String(255), ForeignKey("books.title"))
     borrowed_at = Column(TIMESTAMP, server_default=func.now())
     returned_at = Column(TIMESTAMP, nullable=True)

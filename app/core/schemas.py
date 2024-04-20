@@ -36,13 +36,20 @@ class UpdateBookRequest(BaseModel):
     availability: int
 
     class Config:
-        extra = Extra.forbid
+        extra = Extra.forbid  # Reject extra fields
+        validate_all = True   # Validate all fields
 
 class BorrowBookRequest(BaseModel):
     book_title: str
     borrowed_at: str
-#   "returned_at": "string",
-#   "due_date": "string"
+
+    class Config:
+        extra = Extra.forbid
+
+class ReturnBookRequest(BaseModel):
+    book_title: str
+    user_name : str
+    returned_at :str 
 
     class Config:
         extra = Extra.forbid

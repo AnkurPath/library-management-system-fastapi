@@ -7,7 +7,7 @@ from config.config import SQLALCHEMY_DATABASE_URL
 
 class Database:
     def __init__(self):
-        self.engine = create_engine(SQLALCHEMY_DATABASE_URL)
+        self.engine = create_engine(SQLALCHEMY_DATABASE_URL,connect_args={"check_same_thread": False})
 
     def check_connection(self):
         try:
